@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  IgnorableNamespaces="uap mp rescap">
+
+  <Identity
+    Name="af944053-508a-4929-ae2d-6682f2d47402"
+    Publisher="CN=timot"
+    Version="1.0.0.0" />
+
+  <Properties>
+    <DisplayName>WapChromaSampleApp</DisplayName>
+    <PublisherDisplayName>timot</PublisherDisplayName>
+    <Logo>Images\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="$targetentrypoint$">
+      <uap:VisualElements
+        DisplayName="WapChromaSampleApp"
+        Description="WapChromaSampleApp"
+        BackgroundColor="transparent"
+        Square150x150Logo="Images\Square150x150Logo.png"
+        Square44x44Logo="Images\Square44x44Logo.png">
+        <uap:DefaultTile
+          Wide310x150Logo="Images\Wide310x150Logo.png" />
+      </uap:VisualElements>
+    </Application>
+    <Application Id="CppGame"
+			Executable="CSDK_ChromaSampleApp.exe"
+			EntryPoint="main">
+      <uap:VisualElements
+			  DisplayName="CppGame"
+			  Square150x150Logo="Assets\Square150x150Logo.png"
+			  Square44x44Logo="Assets\Square44x44Logo.png"
+			  Description="UwpLauncher"
+			  BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <desktop:Extension Category="windows.fullTrustProcess" Executable="CSDK_ChromaSampleApp.exe" EntryPoint="main">
+          <desktop:FullTrustProcess>
+            <desktop:ParameterGroup GroupId="CppGame" Parameters="/CppGame"/>
+          </desktop:FullTrustProcess>
+        </desktop:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>
