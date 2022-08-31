@@ -4872,8 +4872,6 @@ int main()
 
 	Sleep(100); //wait for init
 
-	Sleep(20000);
-
 	bool supportsStreaming = ChromaAnimationAPI::CoreStreamSupportsStreaming();
 
     if (supportsStreaming)
