@@ -2,7 +2,7 @@
 
 * Note: Visit the [Chroma Animation Guide](https://chroma.razer.com/ChromaGuide/) to find the latest supported plugin for Chroma RGB.
 
-# C++ SDK - Chroma Animation Sample App
+# C++ SDK - Microsoft Store - Chroma Animation Sample App
 
 **Table of Contents**
 
@@ -47,7 +47,59 @@
 
 The `CSDK Sample App` is a C++ console app that shows the animations from the [Chroma Animation Guide](http://chroma.razer.com/ChromaGuide/).
 
+In order to run the Chroma application as a Microsoft Store app, the solution uses a Windows Application Packaging Project, and a UWP launcher to open the game with full trust in order to access the Chroma SDK.
+
+Make sure that the `WapStoreApp` project is the start-up project. The `UwpLauncher` should be the entry point.
+
+![image_3](images/image_3.png)
+
+The `UwpLauncher` starts the game process with full trust when the `MainPage` loads.
+
+```C#
+private async Task LaunchProcess()
+{
+    try
+    {
+        if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.ApplicationModel.FullTrustAppContract", 1, 0))
+        {
+            const int delay = 500;
+
+            Windows.Foundation.IAsyncAction action = Windows.ApplicationModel.FullTrustProcessLauncher.LaunchFullTrustProcessForAppAsync("CppGame", "CppGame");
+            while (action.Status == Windows.Foundation.AsyncStatus.Started)
+            {
+                await Task.Delay(delay);
+            }
+
+            if (action.Status == Windows.Foundation.AsyncStatus.Completed)
+            {
+                await SetText("Launch Complete!");
+                await Task.Delay(delay);
+                Application.Current.Exit();
+            }
+            else
+            {
+                await SetText(string.Format("C++ Game Status: {0}", action.Status));
+            }
+        }
+        else
+        {
+            await SetText("Launch Failed! FullTrustAppContract");
+        }
+    }
+    catch (Exception ex)
+    {
+        await SetText(String.Format("Launch Failed! Exception: {0}", ex));
+    }
+}
+```
+
 **Screenshot:**
+
+**The `UwpLauncher` launches the game process with full trust**
+
+![image_4](/images/image_4.png)
+
+**The game has access to the Chroma SDK running with full trust**
 
 ![image_1](/images/image_1.png)
 
